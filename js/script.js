@@ -20,6 +20,7 @@ function showPage(array, pageToShow) {
 	const lastIndex = 9 * pageToShow - 1;
 	const studentList = document.querySelector('.student-list');
 	studentList.innerHTML = '';
+
 	array.forEach((person,i) => {
 		if(i >= firstIndex && i <= lastIndex) {
 			const personDOM = `
@@ -49,6 +50,7 @@ function showPage(array, pageToShow) {
 function addPagination(array) {
 	const pages = Math.ceil(array.length/9);
 	const linkList = document.querySelector('.link-list');
+	
 	linkList.innerHTML = '';
 	for (let i = 0; i < pages; i++) {
 		if (i === 0) {		
@@ -123,7 +125,7 @@ function addListenersToSearch() {
 
 /**
  * Loops trought given array and searches for input string from a combination string of 
- * "first name" + "last name". Returns the results in array.
+ * "first name" + "last name". Returns the results in an array.
  * @param {*} array 
  * @param {*} input 
  */
