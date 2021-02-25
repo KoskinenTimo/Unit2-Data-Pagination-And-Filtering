@@ -25,7 +25,7 @@ function showPage(array, pageToShow) {
 			const personDOM = `
 				<li class="student-item cf">
 					<div class="student-details">
-						<img class="avatar" src="${person.picture.large}" alt="Profile Picture"
+						<img class="avatar" src="${person.picture.large}" alt="Profile Picture">
 						<h3>${person.name.first} ${person.name.last}</h3>
 						<span class="email">${person.email}</span>
 					</div>
