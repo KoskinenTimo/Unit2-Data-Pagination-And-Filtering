@@ -42,8 +42,8 @@ function showPage(array, pageToShow) {
 /**
  * Adding pagination to profile view. Page shows 9 profiles, 'array' contains more profiles,
  * so pagination with this function sets up navigation below the profiles to scroll trought
- * 'array'. Calls 'showPage' to change the view to clicked section(button with num value in nav 
- * bar) of profiles.
+ * 'array'. HTML is built inside a loop for each button and added to DOM directly.
+ * Calls 'showPage' to change the view to clicked(button with number value) section of profiles.
  * @param {array} array 
  */
 function addPagination(array) {
@@ -72,12 +72,74 @@ function addPagination(array) {
 		if(e.target.tagName === 'BUTTON') {
 			document.querySelector('.active').classList.remove('active');
 			e.target.classList.add('active');
-			showPage(data,e.target.innerHTML);
+			showPage(array,e.target.innerHTML);
 		}
 	});
+}
+
+/**
+ * Adds search bar to search from student view/array. Added directly to DOM inside header.
+ */
+function addSearchbar() {
+	const header = document.querySelector('.header');
+	const searchBar = `
+	<label for="search" class="student-search">
+  	<input id="search" placeholder="Search by name...">
+  	<button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+	</label>
+	`;
+	header.insertAdjacentHTML('beforeend', searchBar);
+	addListenersToSearch();
+}
+
+/**
+ * Adding listeners to Search bar for both 'click' and 'keyup' events. Using 'showPage' and
+ * 'addPagination' functions to alter the view according to the search results.
+ */
+function addListenersToSearch() {
+	const searchButton = document.querySelector('.student-search button');
+	const searchInput = document.querySelector('#search');
+	const studentList = document.querySelector('.student-list');
+	const noResultsHTML = `<h2>No results found!</h2>`;
+
+	searchButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		const resultsArray = filterResults(data,searchInput.value);
+		showPage(filterResults(data,searchInput.value),1)
+		addPagination(resultsArray);
+		if(!resultsArray.length) {
+			studentList.insertAdjacentHTML('afterbegin',noResultsHTML);
+		}
+	});
+	searchInput.addEventListener('keyup', function (e) {
+		const resultsArray = filterResults(data,searchInput.value);
+		showPage(filterResults(data,searchInput.value),1)
+		addPagination(resultsArray);
+		if(!resultsArray.length) {
+			studentList.insertAdjacentHTML('afterbegin',noResultsHTML);
+		}
+	})
+}
+
+/**
+ * Loops trought given array and searches for input string from a combination string of 
+ * "first name" + "last name". Returns the results in array.
+ * @param {*} array 
+ * @param {*} input 
+ */
+function filterResults(array,input) {
+	const resultsArray = [];
+	array.forEach(profile => {
+		const targetString = profile.name.first + " " + profile.name.last;
+		if (targetString.toLowerCase().includes(input.toLowerCase())) {
+			resultsArray.push(profile);
+		}
+	});
+	return resultsArray;
 }
 
 
 // Call functions
 showPage(data,1);
+addSearchbar();
 addPagination(data);
