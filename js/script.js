@@ -30,7 +30,7 @@ function showPage(array, pageToShow) {
 						<span class="email">${person.email}</span>
 					</div>
 					<div class="joined-details">
-						<span class="date">Joined ${person.registered.date}</span>
+						<span class="date">Joined ${person.registered.date.replaceAll("-","/")}</span>
 					</div>
 				</li>
 				`
