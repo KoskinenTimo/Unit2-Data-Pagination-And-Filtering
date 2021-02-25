@@ -111,7 +111,7 @@ function addListenersToSearch() {
 			studentList.insertAdjacentHTML('afterbegin',noResultsHTML);
 		}
 	});
-	searchInput.addEventListener('keyup', function (e) {
+	searchInput.addEventListener('keyup', function() {
 		const resultsArray = filterResults(data,searchInput.value);
 		showPage(filterResults(data,searchInput.value),1)
 		addPagination(resultsArray);
